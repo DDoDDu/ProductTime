@@ -26,7 +26,7 @@ class Spirit {
 
         this.position.y += this.veicity.y;
 
-        this.position.x += this.veicity.x;
+        // this.position.x += this.veicity.x;
 
         if(this.position.y + this.height + this.veicity.y >= canvas.height) {
             this.veicity.y = 0;
@@ -62,7 +62,7 @@ const enemy = new Spirit( {
 console.log(player);
 
 function animate() {
-    window.reoustAnimationFrame(animate);
+    window.requestAnimationFrame(animate);
 
     c.fillStyle = "black";
     c.fillRect(0, 0, canvas.width, canvas.height);
@@ -73,20 +73,20 @@ function animate() {
 
 animate();
 
-window.addEventListener("keydown", (event) => {
-    console.log(event.key);
-    switch(event.key) {
-        case "d" :
-            player.veicity.x = 1;
-            break;
-    }
-})
+// window.addEventListener("keydown", (event) => {
+//     console.log(event.key);
+//     switch(event.key) {
+//         case "d" :
+//             player.veicity.x = 1;
+//             break;
+//     }
+// })
 
-window.addEventListener("keyup", (event) => {
-    console.log(event.key);
-    switch(event.key) {
-        case "d" :
-            player.veicity.x = 0;
-            break;
-    }
-})
+// window.addEventListener("keyup", (event) => {
+//     console.log(event.key);
+//     switch(event.key) {
+//         case "d" :
+//             player.veicity.x = 0;
+//             break;
+//     }
+// })
