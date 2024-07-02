@@ -9373,7 +9373,7 @@ var Mouse = __webpack_require__(14);
                             c.lineWidth = part.render.lineWidth;
                             c.strokeStyle = part.render.strokeStyle;
                             c.stroke();
-                        }
+                       u }
     
                         c.fill();
                     } else {
