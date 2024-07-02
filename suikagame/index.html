@@ -12,18 +12,20 @@
       background-size: cover;
       background-position: center;
       user-select: none; /* 글씨 선택 방지 */
-      margin: 0; /* body의 margin을 0으로 설정하여 전체 화면으로 만듦 */
-      padding: 0; /* body의 padding을 0으로 설정하여 전체 화면으로 만듦 */
     }
-    h1 {
-      font-size: 3vw; /* viewport 너비의 3% 크기로 설정 */
-      margin-top: 5vh; /* viewport 높이의 5% 만큼 margin top 설정 */
-    }
-    #score, #rank {
-      font-size: 2vw; /* viewport 너비의 2% 크기로 설정 */
+    #score {
       position: absolute;
       top: 10px;
       left: 10px;
+      font-size: 24px;
+      color: #000;
+      user-select: none; /* 글씨 선택 방지 */
+    }
+    #rank {
+      position: absolute;
+      top: 40px;
+      left: 10px;
+      font-size: 24px;
       color: #000;
       user-select: none; /* 글씨 선택 방지 */
     }
