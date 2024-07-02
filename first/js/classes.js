@@ -1,6 +1,6 @@
 class Sprite {
     constructor({ position, imageSrc, scale = 1, framesMax = 1, offset = { x: 0, y: 0 } }) {
-        // velocity 추가하면서 중괄호로 묶는다. (편하게 관리하게 위해 쓰는거 같음)
+        // velocity 추가하면서 중괄호로 묶는다. (편하게 관리하게 위해?)
         this.position = position;
 
         this.width = 50;
@@ -74,7 +74,7 @@ class Fighter extends Sprite {
             offset,
         })
 
-        // velocity 추가하면서 중괄호로 묶는다. (편하게 관리하게 위해 쓰는거 같음)
+        // velocity 추가하면서 중괄호로 묶는다. (편하게 관리하게 위해?)
         //this.position = position;
         this.velocity = velocity;
 
