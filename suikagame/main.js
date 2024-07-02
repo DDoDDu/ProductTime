@@ -82,7 +82,7 @@ function addFruit(x = 310, y = 50) {
   currentFruit = fruit;
 
   World.add(world, body);
-  updateScore(0); // Update score display when a new fruit is added
+  updateScore(0);
 }
 
 function updateScore(points) {
@@ -111,7 +111,6 @@ window.onmousemove = (event) => {
     let mouseX = event.clientX;
     const radius = currentFruit.radius;
 
-    // 벽을 넘지 않도록 x 좌표 제한
     const leftBoundary = 30 + radius;
     const rightBoundary = 590 - radius;
 
