@@ -1,5 +1,5 @@
 import { Bodies, Body, Engine, Events, Render, Runner, World } from "matter-js";
-import { Animaimg } from "../suikagame/Anima";
+import { Animaimg } from "./Anima";
 
 let FRUITS = Animaimg;
 
