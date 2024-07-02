@@ -73,7 +73,7 @@ function addFruit(x = 310, y = 50) {
     index: index,
     isSleeping: true,
     render: {
-      sprite: { texture: `${fruit.name}.png` }
+      sprite: { texture: `base/${fruit.name}.png` }
     },
     restitution: 0.2,
   });
@@ -112,7 +112,7 @@ window.onmousemove = (event) => {
     const radius = currentFruit.radius;
 
     const leftBoundary = 30 + radius;
-    const rightBoundary = 590 - radius;
+    const rightBoundary = render.options.width - 30 - radius;
 
     if (mouseX < leftBoundary) mouseX = leftBoundary;
     if (mouseX > rightBoundary) mouseX = rightBoundary;
@@ -157,7 +157,7 @@ Events.on(engine, "collisionStart", (event) => {
         newFruit.radius,
         {
           render: {
-            sprite: { texture: `${newFruit.name}.png` }
+            sprite: { texture: `base/${newFruit.name}.png` }
           },
           index: index + 1,
         }
