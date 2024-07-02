@@ -9315,7 +9315,7 @@ var Mouse = __webpack_require__(14);
                     // Assuming _getTexture function returns a valid HTMLImageElement
                     var texture = _getTexture(render, sprite.texture);
     
-                    if (texture.complete && texture.naturalWidth !== 0) {
+                    if (texture && texture.complete && texture.naturalWidth !== 0) {
                         c.translate(part.position.x, part.position.y);
                         c.rotate(part.angle);
     
@@ -9331,7 +9331,15 @@ var Mouse = __webpack_require__(14);
                         c.rotate(-part.angle);
                         c.translate(-part.position.x, -part.position.y);
                     } else {
-                        console.warn("Texture image not fully loaded:", sprite.texture);
+                        // If texture is not fully loaded, wait and try again
+                        if (texture) {
+                            texture.onload = function() {
+                                // Redraw the body after texture is loaded
+                                Render.bodies(render, bodies, context);
+                            };
+                        } else {
+                            console.warn("Texture image not found or loaded:", sprite.texture);
+                        }
                     }
                 } else {
                     // part polygon
@@ -9379,6 +9387,7 @@ var Mouse = __webpack_require__(14);
             }
         }
     };
+    
     
 
     /**
