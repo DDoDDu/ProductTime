@@ -1,22 +1,43 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="halloween/10_watermelon.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>애니 수박게임</title>
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/png" href="halloween/10_watermelon.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>애니 수박게임</title>
 
-    <style>
-      body {
-        text-align: center;
-      }
-    </style>
-  </head>
-  <body>
-    <h1>애니수박게임</h1>
-    <pre>
-      Use A, S, D to control the fruit.
-    </pre>
-    <script type="module" src="./main.js"></script>
-  </body>
+  <style>
+    body {
+      text-align: center;
+      background-color: rgb(242, 255, 124);
+      background-size: cover;
+      background-position: center;
+      user-select: none; /* 글씨 선택 방지 */
+    }
+    #score {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      font-size: 24px;
+      color: #000;
+      user-select: none; /* 글씨 선택 방지 */
+    }
+    #rank {
+      position: absolute;
+      top: 40px;
+      left: 10px;
+      font-size: 24px;
+      color: #000;
+      user-select: none; /* 글씨 선택 방지 */
+    }
+  </style>
+</head>
+<body>
+  <h1>애니수박게임</h1>
+  마우스를 이용하여 키타가와 마린을 만들어보세요!
+  <div id="score">Score: 0</div>
+  <div id="rank">Rank: Beginner</div>
+  <script src="matter.js"></script>
+  <script type="module" src="./main.js"></script>
+</body>
 </html>

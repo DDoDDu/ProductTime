@@ -1,7 +1,14 @@
-import { Bodies, Body, Engine, Events, Render, Runner, World } from "matter-js";
-import { Animaimg } from "./Anima";
+var Engine = Matter.Engine,
+    Render = Matter.Render,
+    Runner = Matter.Runner,
+    Bodies = Matter.Bodies,
+    Body = Matter.Body,
+    World = Matter.World,
+    Events = Matter.Events;
 
-let FRUITS = Animaimg;
+import { FRUITS_BASE } from "./Anima.js";
+
+let FRUITS = FRUITS_BASE;
 
 const engine = Engine.create();
 const render = Render.create({
@@ -37,7 +44,7 @@ const topLine = Bodies.rectangle(310, 150, 620, 2, {
   isStatic: true,
   isSensor: true,
   render: { fillStyle: "#E6B143" }
-})
+});
 
 World.add(world, [leftWall, rightWall, ground, topLine]);
 
@@ -47,13 +54,22 @@ Runner.run(engine);
 let currentBody = null;
 let currentFruit = null;
 let disableAction = false;
-let interval = null;
+let score = 0;
+let rank = "Beginner";
 
-function addFruit() {
+const rankThresholds = {
+  Beginner: 0,
+  Intermediate: 50,
+  Advanced: 100,
+  Expert: 200,
+  Master: 500,
+};
+
+function addFruit(x = 310, y = 50) {
   const index = Math.floor(Math.random() * 5);
   const fruit = FRUITS[index];
 
-  const body = Bodies.circle(300, 50, fruit.radius, {
+  const body = Bodies.circle(x, y, fruit.radius, {
     index: index,
     isSleeping: true,
     render: {
@@ -66,60 +82,62 @@ function addFruit() {
   currentFruit = fruit;
 
   World.add(world, body);
+  updateScore(0); // Update score display when a new fruit is added
 }
 
-window.onkeydown = (event) => {
+function updateScore(points) {
+  score += points;
+  document.getElementById("score").innerText = `Score: ${score}`;
+  updateRank();
+}
+
+function updateRank() {
+  if (score >= rankThresholds.Master) {
+    rank = "Master";
+  } else if (score >= rankThresholds.Expert) {
+    rank = "Expert";
+  } else if (score >= rankThresholds.Advanced) {
+    rank = "Advanced";
+  } else if (score >= rankThresholds.Intermediate) {
+    rank = "Intermediate";
+  } else {
+    rank = "Beginner";
+  }
+  document.getElementById("rank").innerText = `Rank: ${rank}`;
+}
+
+window.onmousemove = (event) => {
+  if (currentBody && currentBody.isSleeping) {
+    let mouseX = event.clientX;
+    const radius = currentFruit.radius;
+
+    // 벽을 넘지 않도록 x 좌표 제한
+    const leftBoundary = 30 + radius;
+    const rightBoundary = 590 - radius;
+
+    if (mouseX < leftBoundary) mouseX = leftBoundary;
+    if (mouseX > rightBoundary) mouseX = rightBoundary;
+
+    Body.setPosition(currentBody, {
+      x: mouseX,
+      y: currentBody.position.y,
+    });
+  }
+};
+
+window.onclick = (event) => {
   if (disableAction) {
     return;
   }
 
-  switch (event.code) {
-    case "KeyA":
-      if (interval)
-        return;
+  currentBody.isSleeping = false;
+  disableAction = true;
 
-      interval = setInterval(() => {
-        if (currentBody.position.x - currentFruit.radius > 30)
-          Body.setPosition(currentBody, {
-            x: currentBody.position.x - 1,
-            y: currentBody.position.y,
-          });
-      }, 5);
-      break;
-
-    case "KeyD":
-      if (interval)
-        return;
-
-      interval = setInterval(() => {
-        if (currentBody.position.x + currentFruit.radius < 590)
-        Body.setPosition(currentBody, {
-          x: currentBody.position.x + 1,
-          y: currentBody.position.y,
-        });
-      }, 5);
-      break;
-
-    case "KeyS":
-      currentBody.isSleeping = false;
-      disableAction = true;
-
-      setTimeout(() => {
-        addFruit();
-        disableAction = false;
-      }, 1000);
-      break;
-  }
-}
-
-window.onkeyup = (event) => {
-  switch (event.code) {
-    case "KeyA":
-    case "KeyD":
-      clearInterval(interval);
-      interval = null;
-  }
-}
+  setTimeout(() => {
+    addFruit(event.clientX, 50);
+    disableAction = false;
+  }, 1000);
+};
 
 Events.on(engine, "collisionStart", (event) => {
   event.pairs.forEach((collision) => {
@@ -147,6 +165,9 @@ Events.on(engine, "collisionStart", (event) => {
       );
 
       World.add(world, newBody);
+
+      // 점수 업데이트
+      updateScore(10); // 충돌할 때마다 점수 추가
     }
 
     if (
